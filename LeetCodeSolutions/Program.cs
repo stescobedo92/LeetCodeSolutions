@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Runtime.CompilerServices;
 
 namespace LeetCodeSolutions
 {
@@ -862,6 +863,50 @@ namespace LeetCodeSolutions
                 return "IPv6";
 
             return "Neither";
+        }
+
+        public static int BasicCalculator(string s)
+        {
+            int sum = 0;
+            int sign = 1;
+
+            Stack<int> st = new Stack<int>();
+            for(int i = 0; i < s.Length; i++)
+            {
+                char ch = s[i];
+
+                if (Char.IsDigit(ch))
+                {
+                    int val = 0;
+                    while(i < s.Length && Char.IsDigit(s[i]))
+                    {
+                        val = val * 10 + s[i] - '0';
+                        i++;
+                    }
+                    i--;
+                    val = val * sign;
+                    sign = 1;
+                    sum += val;
+                }
+                else if (ch.Equals('('))
+                {
+                    st.Push(sum);
+                    st.Push(sign);
+                    sum = 0;
+                    sign = +1;
+                }
+                else if (ch.Equals(')'))
+                {
+                    sum *= st.Pop();
+                    sum += st.Pop();
+                }
+                else if (ch.Equals('-'))
+                {
+                    sign *= -1;
+                }
+            }
+
+            return sum;
         }
     }
 }
