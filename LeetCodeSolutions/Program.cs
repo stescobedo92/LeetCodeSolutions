@@ -908,5 +908,28 @@ namespace LeetCodeSolutions
 
             return sum;
         }
+
+        public static int ContainerWithMostWater(int[] height)
+        {
+            int maxArea = 0;
+            int i = 0;
+            int j = height.Length - 1;
+
+            while(i < j)
+            {
+                if(height[i] < height[j])
+                {
+                    maxArea = Math.Max(maxArea, (j - i) * height[i]);
+                    i++;
+                }
+                else
+                {
+                    maxArea = Math.Max(maxArea, (j - i) * height[j]);
+                    j--;
+                }
+            }
+
+            return maxArea;
+        }
     }
 }
